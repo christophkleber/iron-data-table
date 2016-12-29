@@ -164,6 +164,11 @@ inspired styles to your `iron-data-table`.
         left: 50%;
         --paper-spinner-color: var(--default-primary-color);
       }
+      /*CONTRAST*/
+      :host(.more-contrast), :host(.more-contrast) #header.iron-data-table{
+        color: #000000;
+      }
+
     </style>
     <div id="container">
       <div id="header">
@@ -473,6 +478,9 @@ inspired styles to your `iron-data-table`.
         moreContrast :{
           type: Boolean,
           value: false
+        },
+        textAlternatives: {
+          type: String
         }
       },
 
@@ -1069,10 +1077,37 @@ inspired styles to your `iron-data-table`.
         }
       },
       _adaptive: function(){
-          if(this.moreContrast){
-            document.querySelector('iron-data-table').className += ' more-contrast';
-
+        this._changeContrast();
+        this._changeTextAlternatives();
+      },
+      _changeContrast: function(){
+        if(this.moreContrast){
+//          TODO: class only once
+          document.querySelector('body').style.backgroundColor = '#ffffff';
+          document.querySelector('iron-data-table').className += ' more-contrast';
+          var rows = document.querySelectorAll('data-table-row');
+          console.log(rows);
+          for (var i = 0; i < rows.length; i++) {
+            rows[i].className += ' more-contrast';
           }
+          var checkbox = document.querySelectorAll('data-table-checkbox');
+          console.log(checkbox);
+          for (var j = 0; j < checkbox.length; j++) {
+            checkbox[j].className += ' more-contrast';
+          }
+        }
+      },
+      _changeTextAlternatives: function () {
+        if (this.textAlternatives == 'text'){
+          var checkbox = document.querySelectorAll('data-table-checkbox');
+          console.log(checkbox);
+          for (var j = 0; j < checkbox.length; j++) {
+            checkbox[j].className += ' text';
+            if (checkbox[j].classList.contains('text')) {
+              checkbox[j].innerHTML = 'auswählen';
+            }
+          }
+        }
       }
     });
   </script>

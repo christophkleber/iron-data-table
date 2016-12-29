@@ -44,6 +44,24 @@
         flex-direction: row;
         width: 100%;
       }
+      /*CONTRAST*/
+      :host(.more-contrast):focus{
+        background-color: #000000;
+        color: #ffffff;
+      }
+      :host(.more-contrast):after{
+        display: none;
+      }
+      :host(.more-contrast[header]){
+          border: 1px solid #000000;
+          background-color: #ffffff;
+      }
+      :host(.more-contrast[selected]) .cells.data-table-row{
+          color: #000000;
+      }
+      :host(.more-contrast[selected]):focus .cells.data-table-row{
+          color: #ffffff;
+      }
     </style>
     <div class="cells">
       <content select="data-table-checkbox"></content>

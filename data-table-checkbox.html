@@ -98,6 +98,27 @@
           transform: scale(1, 1);
         }
       }
+      /*CONTRAST*/
+      :host(.more-contrast){
+        background-color: #ffffff;
+      }
+      :host(.more-contrast[checked]) #container.data-table-checkbox{
+        background-color: #000000;
+        border-color: #000000;
+      }
+      /*TEXT*/
+      :host(.text[checked]) .checkmark.data-table-checkbox{
+          width: auto;
+          height: auto;
+          border: none;
+          animation: none;
+      }
+      :host(.text){
+          min-width: 100px;
+      }
+      :host(.text.more-contrast){
+          color: #000000;
+      }
     </style>
 
     <div id="container">
@@ -129,12 +150,27 @@
         if (checked) {
           this.indeterminate = false;
         }
+        this._changeTextAlternatives();
       },
 
       _indeterminateChanged: function(indeterminate) {
         if (indeterminate) {
           this.checked = false;
         }
+      },
+
+      _changeTextAlternatives: function () {
+//          TODO: Text abfrage vor aufruf
+          var checkbox = document.querySelectorAll('data-table-checkbox');
+          for (var i = 0; i < checkbox.length; i++) {
+              if (checkbox[i].classList.contains('text') && checkbox[i].hasAttribute('checked')) {
+                  checkbox[i].innerHTML = 'gewählt';
+              } else if (checkbox[i].classList.contains('text')){
+                  checkbox[i].innerHTML = 'auswählen';
+              }
+          }
+
+
       }
     });
   </script>

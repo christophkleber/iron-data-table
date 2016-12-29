@@ -11,7 +11,7 @@
 
     <template is="dom-bind">
       <iron-ajax url="https://raw.githubusercontent.com/christophkleber/data/master/data.json" last-response="{{data}}" auto></iron-ajax>
-      <iron-data-table items="[[data]]" more-contrast="true" selectable multi-selection>
+      <iron-data-table items="[[data]]" more-contrast="true" selectable multi-selection text-alternatives="text">
         <data-table-column name="Anrede">
           <template>[[item.name.title]]</template>
         </data-table-column>
