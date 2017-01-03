@@ -62,6 +62,10 @@
       :host(.more-contrast[selected]):focus .cells.data-table-row{
           color: #ffffff;
       }
+      /*READING DIRECTION*/
+      :host(.rtl) .cells{
+        flex-direction: row-reverse;
+      }
     </style>
     <div class="cells">
       <content select="data-table-checkbox"></content>

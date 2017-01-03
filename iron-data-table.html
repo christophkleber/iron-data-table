@@ -168,6 +168,17 @@ inspired styles to your `iron-data-table`.
       :host(.more-contrast), :host(.more-contrast) #header.iron-data-table{
         color: #000000;
       }
+      /*SERIFE FONT*/
+      :host(.serif) {
+          font-family: '"Times New Roman", Times, serif';
+      }
+      /*FONT SIZE*/
+      :host(.l), :host(.l) #header.iron-data-table{
+          font-size: 15px;
+      }
+      :host(.xl), :host(.xl) #header.iron-data-table{
+          font-size: 17px;
+      }
 
     </style>
     <div id="container">
@@ -481,7 +492,18 @@ inspired styles to your `iron-data-table`.
         },
         textAlternatives: {
           type: String
+        },
+        fontFamily: {
+          type: String
+        },
+        fontSize: {
+          type: String,
+          value: 'm'
+        },
+        readingDirection: {
+          type: String
         }
+
       },
 
       observers: ['_itemsChanged(items.*)',
@@ -1079,6 +1101,9 @@ inspired styles to your `iron-data-table`.
       _adaptive: function(){
         this._changeContrast();
         this._changeTextAlternatives();
+        this._changeFontStyle();
+        this._changeFontSize();
+        this._changeReadingDirection();
       },
       _changeContrast: function(){
         if(this.moreContrast){
@@ -1086,12 +1111,10 @@ inspired styles to your `iron-data-table`.
           document.querySelector('body').style.backgroundColor = '#ffffff';
           document.querySelector('iron-data-table').className += ' more-contrast';
           var rows = document.querySelectorAll('data-table-row');
-          console.log(rows);
           for (var i = 0; i < rows.length; i++) {
             rows[i].className += ' more-contrast';
           }
           var checkbox = document.querySelectorAll('data-table-checkbox');
-          console.log(checkbox);
           for (var j = 0; j < checkbox.length; j++) {
             checkbox[j].className += ' more-contrast';
           }
@@ -1100,13 +1123,46 @@ inspired styles to your `iron-data-table`.
       _changeTextAlternatives: function () {
         if (this.textAlternatives == 'text'){
           var checkbox = document.querySelectorAll('data-table-checkbox');
-          console.log(checkbox);
           for (var j = 0; j < checkbox.length; j++) {
             checkbox[j].className += ' text';
             if (checkbox[j].classList.contains('text')) {
               checkbox[j].innerHTML = 'auswählen';
             }
           }
+        }
+      },
+      _changeFontStyle: function (){
+        if (this.fontFamily == 'serif'){
+          document.querySelector('iron-data-table').className += ' serif';
+        }
+      },
+      _changeFontSize: function (){
+        switch (this.fontSize){
+          case 'm':
+            return;
+            break;
+          case 'l':
+            document.querySelector('iron-data-table').className += ' l';
+            break;
+          case 'xl':
+            document.querySelector('iron-data-table').className += ' xl';
+            break;
+          default:
+            break;
+        }
+      },
+      _changeReadingDirection: function () {
+        switch (this.readingDirection){
+          case 'ltr':
+            console.log('ltr');
+            break;
+          case 'rtl':
+            console.log('rtl');
+            var rows = document.querySelectorAll('data-table-row');
+            for (var i = 0; i < rows.length; i++) {
+              rows[i].className += ' rtl';
+            }
+            break;
         }
       }
     });
