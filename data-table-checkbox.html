@@ -98,6 +98,7 @@
           transform: scale(1, 1);
         }
       }
+      /*ADAPTIVE STYLES*/
       /*CONTRAST*/
       :host(.more-contrast){
         background-color: #ffffff;
@@ -150,6 +151,7 @@
         if (checked) {
           this.indeterminate = false;
         }
+        /*after checked action text has to be changed also*/
         this._changeTextAlternatives();
       },
 
@@ -158,9 +160,11 @@
           this.checked = false;
         }
       },
-
+      /**
+       * _changeTextAlternatives - Change symbols to text.
+       * Based on presence of CSS class 'text'
+       */
       _changeTextAlternatives: function () {
-//          TODO: Text abfrage vor aufruf
           var checkbox = document.querySelectorAll('data-table-checkbox');
           for (var i = 0; i < checkbox.length; i++) {
               if (checkbox[i].classList.contains('text') && checkbox[i].hasAttribute('checked')) {

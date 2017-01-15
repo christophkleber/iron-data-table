@@ -163,7 +163,8 @@ inspired styles to your `iron-data-table`.
         top: 45%;
         left: 50%;
         --paper-spinner-color: var(--default-primary-color);
-      }
+
+      /*ADAPTIVE STYLES*/
       /*CONTRAST*/
       :host(.more-contrast), :host(.more-contrast) #header.iron-data-table{
         color: #000000;
@@ -479,7 +480,6 @@ inspired styles to your `iron-data-table`.
             return [];
           }
         },
-
         _this: {
           type: Object,
           value: function() {
@@ -493,7 +493,7 @@ inspired styles to your `iron-data-table`.
         textAlternatives: {
           type: String
         },
-        fontFamily: {
+        fontStyle: {
           type: String
         },
         fontSize: {
@@ -1098,6 +1098,10 @@ inspired styles to your `iron-data-table`.
           this._fireEvent('selecting-item', e.model.item, this.selectItem);
         }
       },
+      /**
+       * _adaptive - execute all methods to provide adaptivity.
+       *
+       */
       _adaptive: function(){
         this._changeContrast();
         this._changeTextAlternatives();
@@ -1105,66 +1109,111 @@ inspired styles to your `iron-data-table`.
         this._changeFontSize();
         this._changeReadingDirection();
       },
+      /**
+       * _changeContrast - Change contrast of the component.
+       * Based on value of moreContrast
+       */
       _changeContrast: function(){
-        if(this.moreContrast){
-//          TODO: class only once
-          document.querySelector('body').style.backgroundColor = '#ffffff';
-          document.querySelector('iron-data-table').className += ' more-contrast';
+        if(this.moreContrast ){
+          var className = 'more-contrast';
+          var ironDataTable = document.querySelector('iron-data-table');
+          this._setClass(ironDataTable, className);
           var rows = document.querySelectorAll('data-table-row');
-          for (var i = 0; i < rows.length; i++) {
-            rows[i].className += ' more-contrast';
-          }
-          var checkbox = document.querySelectorAll('data-table-checkbox');
-          for (var j = 0; j < checkbox.length; j++) {
-            checkbox[j].className += ' more-contrast';
-          }
+          this._setClassToList(rows, className);
+          var checkboxes = document.querySelectorAll('data-table-checkbox');
+          this._setClassToList(checkboxes, className);
         }
       },
+      /**
+       * _changeTextAlternatives - Change text elements to alternatives or symbols to text alternatives.
+       * Based on value of textAlternatives
+       */
       _changeTextAlternatives: function () {
         if (this.textAlternatives == 'text'){
-          var checkbox = document.querySelectorAll('data-table-checkbox');
-          for (var j = 0; j < checkbox.length; j++) {
-            checkbox[j].className += ' text';
-            if (checkbox[j].classList.contains('text')) {
-              checkbox[j].innerHTML = 'auswählen';
+          var className= 'text';
+          var checkboxes = document.querySelectorAll('data-table-checkbox');
+          for (var i = 0; i < checkboxes.length; i++) {
+            this._setClass(checkboxes[i], className);
+            if (checkboxes[i].classList.contains('text')) {
+              checkboxes[i].innerHTML = 'auswählen';
             }
           }
         }
       },
+      /**
+       * _changeFontStyle - Change font to serif or sans serif.
+       * Based on value of fontStyle
+       */
       _changeFontStyle: function (){
-        if (this.fontFamily == 'serif'){
-          document.querySelector('iron-data-table').className += ' serif';
+        if (this.fontStyle == 'serif'){
+          var className = 'serif';
+          var ironDataTable = document.querySelector('iron-data-table');
+          this._setClass(ironDataTable, className);
         }
       },
+      /**
+       * _changeFontSize - Change font size.
+       * Based on value of fontSize
+       */
       _changeFontSize: function (){
+        var className = 'm';
+        var ironDataTable = document.querySelector('iron-data-table');
         switch (this.fontSize){
           case 'm':
             return;
             break;
           case 'l':
-            document.querySelector('iron-data-table').className += ' l';
+            className = 'l';
+            this._setClass(ironDataTable, className);
             break;
           case 'xl':
-            document.querySelector('iron-data-table').className += ' xl';
+            className = 'xl';
+            this._setClass(ironDataTable, className);
             break;
           default:
             break;
         }
       },
+      /**
+       * _changeReadingDirection - Change structure of component.
+       * Based on value of readingDirection
+       */
       _changeReadingDirection: function () {
+        var className = 'ltr';
+        var rows = document.querySelectorAll('data-table-row');
         switch (this.readingDirection){
           case 'ltr':
             console.log('ltr');
             break;
           case 'rtl':
             console.log('rtl');
-            var rows = document.querySelectorAll('data-table-row');
-            for (var i = 0; i < rows.length; i++) {
-              rows[i].className += ' rtl';
-            }
+            className = 'rtl';
+            this._setClassToList(rows, className);
             break;
         }
-      }
+      },
+      /**
+       * _setClass - Set CSS class of element.
+       *
+       * @param  {element} element   Element which class should be set.
+       * @param  {object} className  Class name which should be set.
+       */
+      _setClass: function (element, className) {
+        if(!element.classList.contains(className)){
+          element.className += ' ' + className;
+        }
+      },
+      /**
+       * _setClassToList- Set CSS class of array of elements.
+       *
+       * @param  {elementList} elements  List of elements which class should be set.
+       * @param  {object} className      Class name which should be set.
+       */
+      _setClassToList: function (elements, className) {
+        for (var i = 0; i < elements.length; i++){
+          this._setClass(elements[i], className);
+        }
+      }  
     });
   </script>
 </dom-module>

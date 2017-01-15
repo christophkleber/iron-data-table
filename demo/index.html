@@ -11,7 +11,7 @@
 
     <template is="dom-bind">
       <iron-ajax url="https://raw.githubusercontent.com/christophkleber/data/master/data.json" last-response="{{data}}" auto></iron-ajax>
-      <iron-data-table items="[[data]]" selectable multi-selection class="adaptive-polymer-element">
+      <iron-data-table items="[[data]]" selectable multi-selection class="adaptive-polymer-element" more-contrast="true" reading-direction="rtl" font-style="serif" font-size="xl" text-alternatives="text">
         <data-table-column name="Anrede">
           <template>[[item.name.title]]</template>
         </data-table-column>
@@ -32,7 +32,7 @@
   </div>
 </body>
 <script>
-  window.onload = function loadDoc() {
+/*  window.onload = function loadDoc() {
     console.log('xmlhttp');
     var xhttpreq;
     try{
@@ -69,7 +69,7 @@
     xhttpreq.open("GET", 'https://raw.githubusercontent.com/christophkleber/data/master/person-two.json', true);
     xhttpreq.send();
 
-  }
+  }*/
 </script>
 
 </html>
